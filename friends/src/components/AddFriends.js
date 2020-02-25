@@ -4,8 +4,10 @@ import axiosWithAuth from '../utils/axiosWithAuth';
 class AddFriends extends React.Component {
     state = {
       newFriend: {
-        username: '',
-        password: ''
+        name: '',
+        age: '',
+        email: '',
+        id: Date.now()
       }
     };
   
@@ -22,9 +24,10 @@ class AddFriends extends React.Component {
         e.preventDefault();
         // Make a POST request and send the credentials object to the api
         axiosWithAuth()
-          .post('/api/login', this.state.newFriend)
+          .post('/api/friends', this.state.newFriend)
           .then(res => {
-            window.localStorage.setItem('token', res.data.payload);
+              console.log(res)
+            // window.localStorage.setItem('token', res.data.payload);
             // navigate the user to /protected (whatever landing page)
             // this.props.history.push('/protected');
           })
@@ -39,27 +42,27 @@ class AddFriends extends React.Component {
           <input
             type="text"
             name="username"
-            value={this.state.newFriend.username}
+            value={this.state.newFriend.name}
             onChange={this.handleChange}
           />
           <input
+            type="number"
+            name="age"
+            value={this.state.newFriend.age}
+            onChange={this.handleChange}
+          />
+          <input
+            type="email"
+            name="email"
+            value={this.state.newFriend.email}
+            onChange={this.handleChange}
+          />
+          {/* <input
             type="password"
             name="password"
             value={this.state.newFriend.password}
             onChange={this.handleChange}
-          />
-          <input
-            type="password"
-            name="password"
-            value={this.state.newFriend.password}
-            onChange={this.handleChange}
-          />
-          <input
-            type="password"
-            name="password"
-            value={this.state.newFriend.password}
-            onChange={this.handleChange}
-          />
+          /> */}
           <button>Add Friend</button>
         </form>
       </div>

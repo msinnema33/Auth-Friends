@@ -18,13 +18,24 @@ class AddFriends extends React.Component {
       });
     };
 
-
+    addFriends = e => {
+        e.preventDefault();
+        // Make a POST request and send the credentials object to the api
+        axiosWithAuth()
+          .post('/api/login', this.state.newFriend)
+          .then(res => {
+            window.localStorage.setItem('token', res.data.payload);
+            // navigate the user to /protected (whatever landing page)
+            // this.props.history.push('/protected');
+          })
+          .catch(err => console.log(err));
+      };
 
 
     render() {
      return ( 
       <div>
-        <form onSubmit={this.login}>
+        <form onSubmit={this.addFriends}>
           <input
             type="text"
             name="username"
@@ -54,5 +65,6 @@ class AddFriends extends React.Component {
       </div>
      ); 
     } 
+}
 
-}      
+export default AddFriends;
